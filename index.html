@@ -102,7 +102,8 @@
             opacity: 0;
             pointer-events: none;
             overflow-y: auto;
-            padding: 24px 20px 100px;
+            /* Extra padding at bottom to prevent banner from hiding content */
+            padding: 24px 20px 140px; 
             transition: opacity 0.15s ease-in-out;
         }
 
@@ -115,16 +116,16 @@
             margin-bottom: 24px;
         }
 
-        /* ROADMAP BREADCRUMBS */
+        /* BIG ROADMAP BREADCRUMBS */
         .roadmap {
-            font-size: 0.55rem;
+            font-size: 0.8rem;
             font-weight: 800;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
             align-items: center;
         }
 
@@ -134,10 +135,12 @@
 
         .roadmap span.active {
             opacity: 1;
-            color: var(--neon-orange);
-            background: var(--text-main);
-            padding: 3px 6px;
-            border-radius: 6px;
+            color: var(--text-main);
+            background: var(--neon-yellow);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 2px solid var(--text-main);
+            box-shadow: 2px 2px 0px rgba(17,17,17,1);
         }
 
         .roadmap-arrow {
@@ -169,7 +172,6 @@
         }
 
         .card {
-            background-color: var(--card-white);
             border: 3px solid var(--border-color);
             border-radius: 18px;
             padding: 18px;
@@ -182,19 +184,40 @@
             transition: transform 0.1s, box-shadow 0.1s;
         }
 
+        /* Tappable cards get interaction feedback */
+        a.card:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0px rgba(17,17,17,1);
+        }
+
         .card .emoji {
             font-size: 2rem;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .card h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             letter-spacing: -0.02em;
             text-transform: uppercase;
+        }
+
+        /* LINK BADGE */
+        .link-hint {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 0.7rem;
+            font-weight: 800;
+            background: rgba(255,255,255,0.7);
+            color: var(--text-main);
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            border: 2px solid var(--text-main);
         }
 
         /* FULL LEADERBOARD STYLING */
@@ -205,14 +228,14 @@
         }
 
         .leaderboard-item {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             line-height: 1.4;
             opacity: 0.9;
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1.5px solid rgba(17,17,17,0.1);
+            border-bottom: 1.5px solid rgba(17,17,17,0.15);
         }
 
         .leaderboard-item:last-child {
@@ -223,8 +246,8 @@
         .leaderboard-item.first {
             font-weight: 900;
             opacity: 1;
-            font-size: 0.9rem;
-            border-bottom: 2px solid rgba(17,17,17,0.25);
+            font-size: 0.95rem;
+            border-bottom: 2px solid rgba(17,17,17,0.3);
         }
 
         .vote-count {
@@ -265,18 +288,25 @@
         .nav-arrow.right { right: 8px; }
         .nav-arrow.disabled { opacity: 0; pointer-events: none; }
 
+        /* MASSIVE SWIPE BANNER */
         .tap-hint {
             position: absolute;
-            bottom: 16px;
-            width: 100%;
+            bottom: 20px;
+            width: 90%;
+            left: 5%;
             text-align: center;
-            font-size: 0.65rem;
-            font-weight: 800;
+            font-size: 0.95rem;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            opacity: 0.4;
+            background: var(--text-main);
+            color: var(--neon-yellow);
+            padding: 14px 20px;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
             pointer-events: none;
             z-index: 100;
+            border: 2px solid rgba(255,255,255,0.2);
         }
     </style>
 </head>
@@ -304,6 +334,7 @@
             </div>
             
             <div class="bento-grid">
+                
                 <div class="card span-2 bg-yellow">
                     <span class="emoji">🥯</span>
                     <h3>Best Bagels</h3>
@@ -319,9 +350,10 @@
                     </div>
                 </div>
 
-                <div class="card span-2 bg-pink">
+                <a href="https://www.facebook.com/groups/569949090540357/posts/1994838911384694/" target="_blank" class="card span-2 bg-pink">
                     <span class="emoji">🍩</span>
                     <h3>Best Donuts</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Madeleine's Bakery</span> <span class="vote-count">47 likes</span></div>
                         <div class="leaderboard-item"><span>2. Quality Bake Shop</span> <span class="vote-count">28</span></div>
@@ -329,11 +361,12 @@
                         <div class="leaderboard-item"><span>4. Cafe Mamajuana</span> <span class="vote-count">6</span></div>
                         <div class="leaderboard-item"><span>5. Sam Mazza's</span> <span class="vote-count">3</span></div>
                     </div>
-                </div>
+                </a>
 
-                <div class="card span-2 bg-orange">
+                <a href="https://www.facebook.com/groups/569949090540357/permalink/2021614955373756/" target="_blank" class="card span-2 bg-orange">
                     <span class="emoji">🥞</span>
                     <h3>Best Pancakes</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. JP's Diner And Deli</span> <span class="vote-count">13 likes</span></div>
                         <div class="leaderboard-item"><span>2. Palmer's Sugarhouse</span> <span class="vote-count">9</span></div>
@@ -345,7 +378,7 @@
                         <div class="leaderboard-item"><span>8. The Friendly Toast</span> <span class="vote-count">2</span></div>
                         <div class="leaderboard-item"><span>9. Sneakers Bistro</span> <span class="vote-count">2</span></div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -362,9 +395,11 @@
             </div>
             
             <div class="bento-grid">
-                <div class="card span-2">
+                
+                <a href="https://www.reddit.com/r/burlington/comments/1ow6f5a/where_do_you_go_for_a_good_lunch/" target="_blank" class="card span-2 bg-purple">
                     <span class="emoji">🥗</span>
                     <h3>Good Lunch</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Top of the Block</span> <span class="vote-count">148 likes</span></div>
                         <div class="leaderboard-item"><span>2. Rogue Rabbit</span> <span class="vote-count">78</span></div>
@@ -378,11 +413,12 @@
                         <div class="leaderboard-item"><span>10. Pioneer Cafe</span> <span class="vote-count">32</span></div>
                         <div class="leaderboard-item"><span>11. Misery Loves Co.</span> <span class="vote-count">31</span></div>
                     </div>
-                </div>
+                </a>
 
-                <div class="card span-2 bg-purple">
+                <a href="https://www.reddit.com/r/burlington/comments/1ljl4lu/best_sandwiches_in_burlington/" target="_blank" class="card span-2 bg-green">
                     <span class="emoji">🥪</span>
                     <h3>Best Sandwiches</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Poppy's</span> <span class="vote-count">109 likes</span></div>
                         <div class="leaderboard-item"><span>2. Union Jacks</span> <span class="vote-count">61</span></div>
@@ -396,9 +432,9 @@
                         <div class="leaderboard-item"><span>10. Cafe Hot</span> <span class="vote-count">12</span></div>
                         <div class="leaderboard-item"><span>11. Rogue Rabbit</span> <span class="vote-count">9</span></div>
                     </div>
-                </div>
+                </a>
 
-                <div class="card span-2 bg-green">
+                <div class="card span-2 bg-blue">
                     <span class="emoji">🍔</span>
                     <h3>Smash Burgers</h3>
                     <div class="leaderboard">
@@ -412,9 +448,10 @@
                     </div>
                 </div>
 
-                <div class="card span-2 bg-blue">
+                <a href="https://old.reddit.com/r/burlington/comments/1r0d4j5/cheap_eats/" target="_blank" class="card span-2 bg-yellow">
                     <span class="emoji">🍟</span>
                     <h3>Cheap Eats</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Morning Light</span> <span class="vote-count">47 likes</span></div>
                         <div class="leaderboard-item"><span>2. UVM Harvest Cafe</span> <span class="vote-count">47</span></div>
@@ -429,7 +466,7 @@
                         <div class="leaderboard-item"><span>11. Sakura</span> <span class="vote-count">12</span></div>
                         <div class="leaderboard-item"><span>12. The Wise Fool</span> <span class="vote-count">7</span></div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -446,9 +483,11 @@
             </div>
             
             <div class="bento-grid">
-                <div class="card span-2 bg-orange">
+                
+                <a href="https://www.facebook.com/groups/569949090540357/posts/1983876965814222/" target="_blank" class="card span-2 bg-orange">
                     <span class="emoji">🍕</span>
                     <h3>Wood Fired Pizza</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Folino's</span> <span class="vote-count">36 likes</span></div>
                         <div class="leaderboard-item"><span>2. American Flatbread</span> <span class="vote-count">29</span></div>
@@ -461,11 +500,12 @@
                         <div class="leaderboard-item"><span>9. Taphouse at Mill River</span> <span class="vote-count">4</span></div>
                         <div class="leaderboard-item"><span>10. Pizzeria Ida</span> <span class="vote-count">4</span></div>
                     </div>
-                </div>
+                </a>
 
-                <div class="card span-2 bg-pink">
+                <a href="https://www.reddit.com/r/burlington/comments/1kx38ml/best_place_near_burlington_for_wings_that_are_not/" target="_blank" class="card span-2 bg-pink">
                     <span class="emoji">🍗</span>
                     <h3>Best Wings</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Shelburne Tap House</span> <span class="vote-count">57 likes</span></div>
                         <div class="leaderboard-item"><span>2. Hannaford / Homemade</span> <span class="vote-count">51</span></div>
@@ -481,11 +521,12 @@
                         <div class="leaderboard-item"><span>12. Whiskey Room</span> <span class="vote-count">8</span></div>
                         <div class="leaderboard-item"><span>13. Honey Road</span> <span class="vote-count">8</span></div>
                     </div>
-                </div>
+                </a>
 
-                <div class="card span-2 bg-yellow">
+                <a href="https://old.reddit.com/r/burlington/comments/1rkq7if/best_nachos_in_town/" target="_blank" class="card span-2 bg-blue">
                     <span class="emoji">🧀</span>
                     <h3>Best Nachos</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Taco Gordo</span> <span class="vote-count">40 likes</span></div>
                         <div class="leaderboard-item"><span>2. Sweetwaters</span> <span class="vote-count">26</span></div>
@@ -498,7 +539,7 @@
                         <div class="leaderboard-item"><span>9. Prohibition Pig</span> <span class="vote-count">5</span></div>
                         <div class="leaderboard-item"><span>10. Rozzi's</span> <span class="vote-count">5</span></div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -515,9 +556,11 @@
             </div>
             
             <div class="bento-grid">
-                <div class="card span-2 bg-dark">
+                
+                <a href="https://www.reddit.com/r/burlington/comments/1piomfm/coziest_bars_in_burlington_please/" target="_blank" class="card span-2 bg-purple">
                     <span class="emoji">🍻</span>
                     <h3>Coziest Bars</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Farmhouse Tap (Basement)</span> <span class="vote-count">109 likes</span></div>
                         <div class="leaderboard-item"><span>2. Deli 126</span> <span class="vote-count">68</span></div>
@@ -533,7 +576,7 @@
                         <div class="leaderboard-item"><span>12. Zero Gravity</span> <span class="vote-count">10</span></div>
                         <div class="leaderboard-item"><span>13. Venetian Lounge</span> <span class="vote-count">9</span></div>
                     </div>
-                </div>
+                </a>
 
                 <div class="card span-2 bg-blue">
                     <span class="emoji">🍲</span>
@@ -552,9 +595,10 @@
                     </div>
                 </div>
 
-                <div class="card span-2 bg-pink">
+                <a href="https://www.reddit.com/r/burlington/comments/1p9yl7n/best_chinese_food_in_town/" target="_blank" class="card span-2 bg-green">
                     <span class="emoji">🥡</span>
                     <h3>Chinese Food</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Hop Sing</span> <span class="vote-count">52 likes</span></div>
                         <div class="leaderboard-item"><span>2. China Express 2</span> <span class="vote-count">47</span></div>
@@ -568,11 +612,12 @@
                         <div class="leaderboard-item"><span>10. China Garden</span> <span class="vote-count">16</span></div>
                         <div class="leaderboard-item"><span>11. Oriental Wok</span> <span class="vote-count">7</span></div>
                     </div>
-                </div>
+                </a>
 
-                <div class="card span-2 bg-green">
+                <a href="https://www.facebook.com/groups/569949090540357/posts/1967971977404721/" target="_blank" class="card span-2 bg-yellow">
                     <span class="emoji">🍝</span>
                     <h3>Italian Food</h3>
+                    <span class="link-hint">🔗 View Original Thread</span>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Papa Franks</span> <span class="vote-count">28 likes</span></div>
                         <div class="leaderboard-item"><span>2. JR's / Junior's</span> <span class="vote-count">19</span></div>
@@ -581,13 +626,13 @@
                         <div class="leaderboard-item"><span>5. Mimi’s Italian Eats</span> <span class="vote-count">8</span></div>
                         <div class="leaderboard-item"><span>6. Trattoria Delia</span> <span class="vote-count">7</span></div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
     </div>
 
-    <div class="tap-hint">Tap edges or swipe to navigate</div>
+    <div class="tap-hint">&larr; SWIPE LEFT & RIGHT TO VIEW CARDS &rarr;</div>
 
 </div>
 
@@ -629,6 +674,8 @@ document.addEventListener('DOMContentLoaded', () => {
     nextArrow.addEventListener('click', () => goTo(currentSlide + 1));
 
     const appContainer = document.getElementById('app-container');
+    
+    // Updated click logic to ensure card links work properly without triggering navigation
     appContainer.addEventListener('click', e => {
         if (e.target.closest('a') || e.target.closest('.nav-arrow')) return;
         const rect = appContainer.getBoundingClientRect();
@@ -642,6 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
     }, { passive: true });
+    
     appContainer.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - startX;
         const dy = e.changedTouches[0].clientY - startY;
