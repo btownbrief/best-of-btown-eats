@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Btown Eats: The Archive</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+
+        :root {
+            --bg-color: #f4f0ea;       
+            --text-main: #111111;      
+            --border-color: #111111;
+            --card-white: #ffffff;     
+
+            --neon-pink:   #ff85a2;
+            --neon-green:  #00e676;
+            --neon-purple: #b185ff;
+            --neon-yellow: #ffde59;
+            --neon-blue:   #4dd0e1;
+            --neon-orange: #ff9e5e;
+
+            --bg-dark: #111111;  
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #111111; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100dvh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        #app-container {
+            width: 100%;
+            max-width: 480px;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* UTILITY CLASSES */
+        .bg-pink   { background-color: var(--neon-pink); }
+        .bg-green  { background-color: var(--neon-green); }
+        .bg-purple { background-color: var(--neon-purple); }
+        .bg-yellow { background-color: var(--neon-yellow); }
+        .bg-blue   { background-color: var(--neon-blue); }
+        .bg-orange { background-color: var(--neon-orange); }
+        .bg-dark   { background-color: var(--bg-dark); color: #f4f0ea; }
+
+        h1, h2, h3, p { margin: 0; }
+        a { color: inherit; text-decoration: none; }
+
+        /* PROGRESS BAR */
+        #progress-container {
+            display: flex;
+            gap: 4px;
+            padding: 16px 20px 0;
+            z-index: 10;
+        }
+
+        .progress-bar-wrapper {
+            flex: 1;
+            height: 4px;
+            background: rgba(17,17,17,0.15);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--text-main);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* SLIDES */
+        .slides-container {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            overflow-y: auto;
+            padding: 24px 20px 100px;
+            transition: opacity 0.15s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .slide-header {
+            margin-bottom: 24px;
+        }
+
+        /* ROADMAP BREADCRUMBS */
+        .roadmap {
+            font-size: 0.55rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .roadmap span {
+            opacity: 0.4;
+        }
+
+        .roadmap span.active {
+            opacity: 1;
+            color: var(--neon-orange);
+            background: var(--text-main);
+            padding: 3px 6px;
+            border-radius: 6px;
+        }
+
+        .roadmap-arrow {
+            opacity: 0.3 !important;
+            font-weight: 900;
+        }
+
+        .slide-header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            line-height: 0.95;
+            margin-bottom: 6px;
+        }
+
+        .slide-header p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.78;
+        }
+
+        /* CARDS */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding-bottom: 24px;
+        }
+
+        .card {
+            background-color: var(--card-white);
+            border: 3px solid var(--border-color);
+            border-radius: 18px;
+            padding: 16px;
+            color: var(--text-main);
+            box-shadow: 4px 4px 0px rgba(17,17,17,1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 116px;
+            position: relative;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .card:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0px rgba(17,17,17,1);
+        }
+
+        .card .emoji {
+            font-size: 1.75rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .card h3 {
+            font-size: 1.05rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        /* Leaderboard styling inside cards */
+        .leaderboard {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .leaderboard-item {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1.3;
+            opacity: 0.85;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .leaderboard-item.first {
+            font-weight: 800;
+            opacity: 1;
+            font-size: 0.85rem;
+            padding-bottom: 2px;
+            border-bottom: 2px solid rgba(17,17,17,0.1);
+            margin-bottom: 2px;
+        }
+
+        .vote-count {
+            font-size: 0.65rem;
+            opacity: 0.6;
+            font-weight: 800;
+        }
+
+        .card.span-2 {
+            grid-column: span 2;
+            min-height: 98px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        /* NAVIGATION ARROWS */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px; height: 48px;
+            background: rgba(17,17,17,0.42);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.22);
+            border-radius: 50%;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .nav-arrow.left  { left: 8px; }
+        .nav-arrow.right { right: 8px; }
+        .nav-arrow.disabled { opacity: 0; pointer-events: none; }
+
+        .tap-hint {
+            position: absolute;
+            bottom: 16px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    
+    <div id="progress-container"></div>
+
+    <div class="slides-container">
+        
+        <div class="nav-arrow left" id="prevArrow">&#8249;</div>
+        <div class="nav-arrow right" id="nextArrow">&#8250;</div>
+
+        <div class="slide active">
+            <div class="slide-header">
+                <div class="roadmap">
+                    <span class="active">Breakfast</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Lunch</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Pub Grub</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Dinner</span>
+                </div>
+                <h1>Breakfast & Bakery</h1>
+                <p>The best morning spots in Btown.</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="card span-2 bg-yellow">
+                    <span class="emoji">🥯</span>
+                    <h3>Best Bagels</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Myers</span> <span class="vote-count">47 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Burlington Bagel</span> <span class="vote-count">41</span></div>
+                        <div class="leaderboard-item"><span>3. Vermont Bagel</span> <span class="vote-count">36</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-pink">
+                    <span class="emoji">🍩</span>
+                    <h3>Best Donuts</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Madeleine's</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item"><span>2. Quality Bake</span> <span class="vote-count">28</span></div>
+                        <div class="leaderboard-item"><span>3. North Country</span> <span class="vote-count">9</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-orange">
+                    <span class="emoji">🥞</span>
+                    <h3>Pancakes</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. JP's Diner</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>2. Palmer's</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>3. The Dutch Mill</span> <span class="vote-count">9</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="roadmap">
+                    <span>Breakfast</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span class="active">Lunch</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Pub Grub</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Dinner</span>
+                </div>
+                <h1>Lunch & Handhelds</h1>
+                <p>Top tiered midday cravings.</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="card span-2 bg-purple">
+                    <span class="emoji">🥪</span>
+                    <h3>Best Sandwiches</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Poppy's</span> <span class="vote-count">109 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Union Jacks</span> <span class="vote-count">61</span></div>
+                        <div class="leaderboard-item"><span>3. Top of the Block</span> <span class="vote-count">53</span></div>
+                    </div>
+                </div>
+
+                <div class="card span-2 bg-green">
+                    <span class="emoji">🍔</span>
+                    <h3>Smash Burgers</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Black Flannel</span> <span class="vote-count">74 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Kate's Food Truck</span> <span class="vote-count">16</span></div>
+                        <div class="leaderboard-item"><span>3. Burlington Beer Co (BBCO)</span> <span class="vote-count">12</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="emoji">🥗</span>
+                    <h3>Good Lunch</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Top of Block</span> <span class="vote-count">148</span></div>
+                        <div class="leaderboard-item"><span>2. Rogue Rabbit</span> <span class="vote-count">78</span></div>
+                        <div class="leaderboard-item"><span>3. Miss Saigon</span> <span class="vote-count">67</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-blue">
+                    <span class="emoji">🍟</span>
+                    <h3>Cheap Eats</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Morning Light</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item"><span>2. UVM Harvest</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item"><span>3. Hana</span> <span class="vote-count">39</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="roadmap">
+                    <span>Breakfast</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Lunch</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span class="active">Pub Grub</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Dinner</span>
+                </div>
+                <h1>Pizza & Pub Grub</h1>
+                <p>The community's favorite slices and bites.</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="card span-2 bg-orange">
+                    <span class="emoji">🍕</span>
+                    <h3>Wood Fired Pizza</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Folino's</span> <span class="vote-count">36 likes</span></div>
+                        <div class="leaderboard-item"><span>2. American Flatbread</span> <span class="vote-count">29</span></div>
+                        <div class="leaderboard-item"><span>3. Pizzeria Verità</span> <span class="vote-count">26</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-pink">
+                    <span class="emoji">🍗</span>
+                    <h3>Best Wings</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Shelburne Tap</span> <span class="vote-count">57</span></div>
+                        <div class="leaderboard-item"><span>2. Hannaford</span> <span class="vote-count">51</span></div>
+                        <div class="leaderboard-item"><span>3. Donwoori</span> <span class="vote-count">35</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-yellow">
+                    <span class="emoji">🧀</span>
+                    <h3>Best Nachos</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Taco Gordo</span> <span class="vote-count">40</span></div>
+                        <div class="leaderboard-item"><span>2. Sweetwaters</span> <span class="vote-count">26</span></div>
+                        <div class="leaderboard-item"><span>3. BBCO</span> <span class="vote-count">24</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-header">
+                <div class="roadmap">
+                    <span>Breakfast</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Lunch</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span>Pub Grub</span> <span class="roadmap-arrow">&rarr;</span> 
+                    <span class="active">Dinner</span>
+                </div>
+                <h1>Dinner & Drinks</h1>
+                <p>Where to end the night.</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="card span-2 bg-dark">
+                    <span class="emoji">🍻</span>
+                    <h3>Coziest Bars</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Farmhouse Tap & Grill (Bsmt)</span> <span class="vote-count">109 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Deli 126</span> <span class="vote-count">68</span></div>
+                        <div class="leaderboard-item"><span>3. Specs</span> <span class="vote-count">48</span></div>
+                    </div>
+                </div>
+
+                <div class="card span-2 bg-blue">
+                    <span class="emoji">🍲</span>
+                    <h3>Cozy Williston Lunch</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Garden of Eatin'</span> <span class="vote-count">108 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Chef's Corner</span> <span class="vote-count">34</span></div>
+                        <div class="leaderboard-item"><span>3. Café at Island Ice Cream</span> <span class="vote-count">29</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-pink">
+                    <span class="emoji">🥡</span>
+                    <h3>Chinese Food</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Hop Sing</span> <span class="vote-count">52</span></div>
+                        <div class="leaderboard-item"><span>2. China Express 2</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item"><span>3. Cafe Dim Sum</span> <span class="vote-count">47</span></div>
+                    </div>
+                </div>
+
+                <div class="card bg-green">
+                    <span class="emoji">🍝</span>
+                    <h3>Italian Food</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Papa Franks</span> <span class="vote-count">28</span></div>
+                        <div class="leaderboard-item"><span>2. JR's / Junior's</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>3. Pulcinellas</span> <span class="vote-count">13</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tap-hint">Tap edges or swipe to navigate</div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+
+    const progressContainer = document.getElementById('progress-container');
+    for (let i = 0; i < totalSlides; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'progress-bar-wrapper';
+        const fill = document.createElement('div');
+        fill.className = 'progress-bar-fill';
+        wrapper.appendChild(fill);
+        progressContainer.appendChild(wrapper);
+    }
+    const progressBars = document.querySelectorAll('.progress-bar-wrapper');
+    const prevArrow = document.getElementById('prevArrow');
+    const nextArrow = document.getElementById('nextArrow');
+
+    function goTo(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentSlide = index;
+        updateUI();
+    }
+
+    function updateUI() {
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === currentSlide));
+        progressBars.forEach((bar, i) => {
+            bar.querySelector('.progress-bar-fill').style.width = i <= currentSlide ? '100%' : '0%';
+        });
+        prevArrow.classList.toggle('disabled', currentSlide === 0);
+        nextArrow.classList.toggle('disabled', currentSlide === totalSlides - 1);
+    }
+
+    prevArrow.addEventListener('click', () => goTo(currentSlide - 1));
+    nextArrow.addEventListener('click', () => goTo(currentSlide + 1));
+
+    const appContainer = document.getElementById('app-container');
+    appContainer.addEventListener('click', e => {
+        if (e.target.closest('a') || e.target.closest('.nav-arrow')) return;
+        const rect = appContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        if (x < rect.width * 0.3) goTo(currentSlide - 1);
+        else if (x > rect.width * 0.7) goTo(currentSlide + 1);
+    });
+
+    let startX = 0, startY = 0;
+    appContainer.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    }, { passive: true });
+    appContainer.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > 50 && Math.abs(dy) < Math.abs(dx)) {
+            dx > 0 ? goTo(currentSlide - 1) : goTo(currentSlide + 1);
+        }
+    }, { passive: true });
+
+    updateUI();
+});
+</script>
+
+</body>
+</html>
