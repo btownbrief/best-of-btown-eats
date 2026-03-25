@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Btown Eats: The Archive</title>
+    <title>Btown Eats: The Full Archive</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
 
@@ -164,7 +164,7 @@
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
             padding-bottom: 24px;
         }
 
@@ -172,74 +172,71 @@
             background-color: var(--card-white);
             border: 3px solid var(--border-color);
             border-radius: 18px;
-            padding: 16px;
+            padding: 18px;
             color: var(--text-main);
             box-shadow: 4px 4px 0px rgba(17,17,17,1);
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            min-height: 116px;
             position: relative;
             transition: transform 0.1s, box-shadow 0.1s;
         }
 
-        .card:active {
-            transform: translate(3px, 3px);
-            box-shadow: 1px 1px 0px rgba(17,17,17,1);
-        }
-
         .card .emoji {
-            font-size: 1.75rem;
+            font-size: 2rem;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .card h3 {
-            font-size: 1.05rem;
+            font-size: 1.2rem;
             font-weight: 900;
             line-height: 1.1;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             letter-spacing: -0.02em;
             text-transform: uppercase;
         }
 
-        /* Leaderboard styling inside cards */
+        /* FULL LEADERBOARD STYLING */
         .leaderboard {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            width: 100%;
         }
 
         .leaderboard-item {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            line-height: 1.3;
-            opacity: 0.85;
+            line-height: 1.4;
+            opacity: 0.9;
             display: flex;
             justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1.5px solid rgba(17,17,17,0.1);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .leaderboard-item.first {
-            font-weight: 800;
+            font-weight: 900;
             opacity: 1;
-            font-size: 0.85rem;
-            padding-bottom: 2px;
-            border-bottom: 2px solid rgba(17,17,17,0.1);
-            margin-bottom: 2px;
+            font-size: 0.9rem;
+            border-bottom: 2px solid rgba(17,17,17,0.25);
         }
 
         .vote-count {
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             opacity: 0.6;
             font-weight: 800;
+            text-align: right;
+            min-width: 50px;
         }
 
         .card.span-2 {
             grid-column: span 2;
-            min-height: 98px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
         }
 
         /* NAVIGATION ARROWS */
@@ -303,7 +300,7 @@
                     <span>Dinner</span>
                 </div>
                 <h1>Breakfast & Bakery</h1>
-                <p>The best morning spots in Btown.</p>
+                <p>The full community rankings.</p>
             </div>
             
             <div class="bento-grid">
@@ -314,26 +311,39 @@
                         <div class="leaderboard-item first"><span>1. Myers</span> <span class="vote-count">47 likes</span></div>
                         <div class="leaderboard-item"><span>2. Burlington Bagel</span> <span class="vote-count">41</span></div>
                         <div class="leaderboard-item"><span>3. Vermont Bagel</span> <span class="vote-count">36</span></div>
+                        <div class="leaderboard-item"><span>4. Green Mountain Bagel</span> <span class="vote-count">32</span></div>
+                        <div class="leaderboard-item"><span>5. The Bagel Place</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>6. The Bagel Cafe</span> <span class="vote-count">15</span></div>
+                        <div class="leaderboard-item"><span>7. Huddys</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>8. Middlebury Bagel</span> <span class="vote-count">8</span></div>
                     </div>
                 </div>
 
-                <div class="card bg-pink">
+                <div class="card span-2 bg-pink">
                     <span class="emoji">🍩</span>
                     <h3>Best Donuts</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Madeleine's</span> <span class="vote-count">47</span></div>
-                        <div class="leaderboard-item"><span>2. Quality Bake</span> <span class="vote-count">28</span></div>
-                        <div class="leaderboard-item"><span>3. North Country</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item first"><span>1. Madeleine's Bakery</span> <span class="vote-count">47 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Quality Bake Shop</span> <span class="vote-count">28</span></div>
+                        <div class="leaderboard-item"><span>3. North Country Donuts</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>4. Cafe Mamajuana</span> <span class="vote-count">6</span></div>
+                        <div class="leaderboard-item"><span>5. Sam Mazza's</span> <span class="vote-count">3</span></div>
                     </div>
                 </div>
 
-                <div class="card bg-orange">
+                <div class="card span-2 bg-orange">
                     <span class="emoji">🥞</span>
-                    <h3>Pancakes</h3>
+                    <h3>Best Pancakes</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. JP's Diner</span> <span class="vote-count">13</span></div>
-                        <div class="leaderboard-item"><span>2. Palmer's</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item first"><span>1. JP's Diner And Deli</span> <span class="vote-count">13 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Palmer's Sugarhouse</span> <span class="vote-count">9</span></div>
                         <div class="leaderboard-item"><span>3. The Dutch Mill</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>4. Athens Diner</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>5. Firebird Cafe</span> <span class="vote-count">6</span></div>
+                        <div class="leaderboard-item"><span>6. Erica's Village Diner</span> <span class="vote-count">5</span></div>
+                        <div class="leaderboard-item"><span>7. The Pinwheel</span> <span class="vote-count">3</span></div>
+                        <div class="leaderboard-item"><span>8. The Friendly Toast</span> <span class="vote-count">2</span></div>
+                        <div class="leaderboard-item"><span>9. Sneakers Bistro</span> <span class="vote-count">2</span></div>
                     </div>
                 </div>
             </div>
@@ -352,6 +362,24 @@
             </div>
             
             <div class="bento-grid">
+                <div class="card span-2">
+                    <span class="emoji">🥗</span>
+                    <h3>Good Lunch</h3>
+                    <div class="leaderboard">
+                        <div class="leaderboard-item first"><span>1. Top of the Block</span> <span class="vote-count">148 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Rogue Rabbit</span> <span class="vote-count">78</span></div>
+                        <div class="leaderboard-item"><span>3. Miss Saigon</span> <span class="vote-count">67</span></div>
+                        <div class="leaderboard-item"><span>4. Poppy Cafe</span> <span class="vote-count">49</span></div>
+                        <div class="leaderboard-item"><span>5. La Di Da Pizza</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item"><span>6. City Market</span> <span class="vote-count">43</span></div>
+                        <div class="leaderboard-item"><span>7. Henry’s Diner</span> <span class="vote-count">37</span></div>
+                        <div class="leaderboard-item"><span>8. Zabby & Elf’s Stone Soup</span> <span class="vote-count">35</span></div>
+                        <div class="leaderboard-item"><span>9. Yellow Mustard Deli</span> <span class="vote-count">35</span></div>
+                        <div class="leaderboard-item"><span>10. Pioneer Cafe</span> <span class="vote-count">32</span></div>
+                        <div class="leaderboard-item"><span>11. Misery Loves Co.</span> <span class="vote-count">31</span></div>
+                    </div>
+                </div>
+
                 <div class="card span-2 bg-purple">
                     <span class="emoji">🥪</span>
                     <h3>Best Sandwiches</h3>
@@ -359,6 +387,14 @@
                         <div class="leaderboard-item first"><span>1. Poppy's</span> <span class="vote-count">109 likes</span></div>
                         <div class="leaderboard-item"><span>2. Union Jacks</span> <span class="vote-count">61</span></div>
                         <div class="leaderboard-item"><span>3. Top of the Block</span> <span class="vote-count">53</span></div>
+                        <div class="leaderboard-item"><span>4. Henry St Deli</span> <span class="vote-count">46</span></div>
+                        <div class="leaderboard-item"><span>5. 4 Corners of the Earth</span> <span class="vote-count">28</span></div>
+                        <div class="leaderboard-item"><span>6. Martone's</span> <span class="vote-count">25</span></div>
+                        <div class="leaderboard-item"><span>7. Paisley Hippo</span> <span class="vote-count">24</span></div>
+                        <div class="leaderboard-item"><span>8. Hoagie Hut</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>9. Jersey Mike's</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>10. Cafe Hot</span> <span class="vote-count">12</span></div>
+                        <div class="leaderboard-item"><span>11. Rogue Rabbit</span> <span class="vote-count">9</span></div>
                     </div>
                 </div>
 
@@ -368,27 +404,30 @@
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Black Flannel</span> <span class="vote-count">74 likes</span></div>
                         <div class="leaderboard-item"><span>2. Kate's Food Truck</span> <span class="vote-count">16</span></div>
-                        <div class="leaderboard-item"><span>3. Burlington Beer Co (BBCO)</span> <span class="vote-count">12</span></div>
+                        <div class="leaderboard-item"><span>3. BBCO</span> <span class="vote-count">12</span></div>
+                        <div class="leaderboard-item"><span>4. Black Radish</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>5. Burger Bar</span> <span class="vote-count">7</span></div>
+                        <div class="leaderboard-item"><span>6. Switchback</span> <span class="vote-count">7</span></div>
+                        <div class="leaderboard-item"><span>7. Green Mountain Bistro</span> <span class="vote-count">6</span></div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <span class="emoji">🥗</span>
-                    <h3>Good Lunch</h3>
-                    <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Top of Block</span> <span class="vote-count">148</span></div>
-                        <div class="leaderboard-item"><span>2. Rogue Rabbit</span> <span class="vote-count">78</span></div>
-                        <div class="leaderboard-item"><span>3. Miss Saigon</span> <span class="vote-count">67</span></div>
-                    </div>
-                </div>
-
-                <div class="card bg-blue">
+                <div class="card span-2 bg-blue">
                     <span class="emoji">🍟</span>
                     <h3>Cheap Eats</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Morning Light</span> <span class="vote-count">47</span></div>
-                        <div class="leaderboard-item"><span>2. UVM Harvest</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item first"><span>1. Morning Light</span> <span class="vote-count">47 likes</span></div>
+                        <div class="leaderboard-item"><span>2. UVM Harvest Cafe</span> <span class="vote-count">47</span></div>
                         <div class="leaderboard-item"><span>3. Hana</span> <span class="vote-count">39</span></div>
+                        <div class="leaderboard-item"><span>4. Market 32</span> <span class="vote-count">27</span></div>
+                        <div class="leaderboard-item"><span>5. Kismayo Kitchen</span> <span class="vote-count">27</span></div>
+                        <div class="leaderboard-item"><span>6. Gold</span> <span class="vote-count">26</span></div>
+                        <div class="leaderboard-item"><span>7. Pho Dang</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>8. Costco</span> <span class="vote-count">15</span></div>
+                        <div class="leaderboard-item"><span>9. Crispy Burger</span> <span class="vote-count">14</span></div>
+                        <div class="leaderboard-item"><span>10. Casa Real</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>11. Sakura</span> <span class="vote-count">12</span></div>
+                        <div class="leaderboard-item"><span>12. The Wise Fool</span> <span class="vote-count">7</span></div>
                     </div>
                 </div>
             </div>
@@ -414,26 +453,50 @@
                         <div class="leaderboard-item first"><span>1. Folino's</span> <span class="vote-count">36 likes</span></div>
                         <div class="leaderboard-item"><span>2. American Flatbread</span> <span class="vote-count">29</span></div>
                         <div class="leaderboard-item"><span>3. Pizzeria Verità</span> <span class="vote-count">26</span></div>
+                        <div class="leaderboard-item"><span>4. Pizza 44</span> <span class="vote-count">20</span></div>
+                        <div class="leaderboard-item"><span>5. Penzo's Pizza</span> <span class="vote-count">20</span></div>
+                        <div class="leaderboard-item"><span>6. La Boca</span> <span class="vote-count">17</span></div>
+                        <div class="leaderboard-item"><span>7. The Barnyard</span> <span class="vote-count">11</span></div>
+                        <div class="leaderboard-item"><span>8. Bramble</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>9. Taphouse at Mill River</span> <span class="vote-count">4</span></div>
+                        <div class="leaderboard-item"><span>10. Pizzeria Ida</span> <span class="vote-count">4</span></div>
                     </div>
                 </div>
 
-                <div class="card bg-pink">
+                <div class="card span-2 bg-pink">
                     <span class="emoji">🍗</span>
                     <h3>Best Wings</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Shelburne Tap</span> <span class="vote-count">57</span></div>
-                        <div class="leaderboard-item"><span>2. Hannaford</span> <span class="vote-count">51</span></div>
+                        <div class="leaderboard-item first"><span>1. Shelburne Tap House</span> <span class="vote-count">57 likes</span></div>
+                        <div class="leaderboard-item"><span>2. Hannaford / Homemade</span> <span class="vote-count">51</span></div>
                         <div class="leaderboard-item"><span>3. Donwoori</span> <span class="vote-count">35</span></div>
+                        <div class="leaderboard-item"><span>4. Switchback Brewing</span> <span class="vote-count">30</span></div>
+                        <div class="leaderboard-item"><span>5. RJ's</span> <span class="vote-count">30</span></div>
+                        <div class="leaderboard-item"><span>6. Wings on Maple</span> <span class="vote-count">21</span></div>
+                        <div class="leaderboard-item"><span>7. Barnyard</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>8. Folino’s</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>9. BBCO</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>10. The Rotisserie</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>11. Devil Takes A Holiday</span> <span class="vote-count">8</span></div>
+                        <div class="leaderboard-item"><span>12. Whiskey Room</span> <span class="vote-count">8</span></div>
+                        <div class="leaderboard-item"><span>13. Honey Road</span> <span class="vote-count">8</span></div>
                     </div>
                 </div>
 
-                <div class="card bg-yellow">
+                <div class="card span-2 bg-yellow">
                     <span class="emoji">🧀</span>
                     <h3>Best Nachos</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Taco Gordo</span> <span class="vote-count">40</span></div>
+                        <div class="leaderboard-item first"><span>1. Taco Gordo</span> <span class="vote-count">40 likes</span></div>
                         <div class="leaderboard-item"><span>2. Sweetwaters</span> <span class="vote-count">26</span></div>
                         <div class="leaderboard-item"><span>3. BBCO</span> <span class="vote-count">24</span></div>
+                        <div class="leaderboard-item"><span>4. Upper Deck Pub</span> <span class="vote-count">21</span></div>
+                        <div class="leaderboard-item"><span>5. Spot on the Dock</span> <span class="vote-count">11</span></div>
+                        <div class="leaderboard-item"><span>6. Casa Grande</span> <span class="vote-count">7</span></div>
+                        <div class="leaderboard-item"><span>7. Stone Corral</span> <span class="vote-count">7</span></div>
+                        <div class="leaderboard-item"><span>8. Casa Real</span> <span class="vote-count">5</span></div>
+                        <div class="leaderboard-item"><span>9. Prohibition Pig</span> <span class="vote-count">5</span></div>
+                        <div class="leaderboard-item"><span>10. Rozzi's</span> <span class="vote-count">5</span></div>
                     </div>
                 </div>
             </div>
@@ -456,39 +519,67 @@
                     <span class="emoji">🍻</span>
                     <h3>Coziest Bars</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Farmhouse Tap & Grill (Bsmt)</span> <span class="vote-count">109 likes</span></div>
+                        <div class="leaderboard-item first"><span>1. Farmhouse Tap (Basement)</span> <span class="vote-count">109 likes</span></div>
                         <div class="leaderboard-item"><span>2. Deli 126</span> <span class="vote-count">68</span></div>
                         <div class="leaderboard-item"><span>3. Specs</span> <span class="vote-count">48</span></div>
+                        <div class="leaderboard-item"><span>4. Wallflower</span> <span class="vote-count">44</span></div>
+                        <div class="leaderboard-item"><span>5. Queen City Brewery</span> <span class="vote-count">35</span></div>
+                        <div class="leaderboard-item"><span>6. Finnigan's</span> <span class="vote-count">32</span></div>
+                        <div class="leaderboard-item"><span>7. Hotel Vermont</span> <span class="vote-count">24</span></div>
+                        <div class="leaderboard-item"><span>8. Howl Bier</span> <span class="vote-count">23</span></div>
+                        <div class="leaderboard-item"><span>9. Doma</span> <span class="vote-count">21</span></div>
+                        <div class="leaderboard-item"><span>10. Whiskey Room</span> <span class="vote-count">15</span></div>
+                        <div class="leaderboard-item"><span>11. Esox</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>12. Zero Gravity</span> <span class="vote-count">10</span></div>
+                        <div class="leaderboard-item"><span>13. Venetian Lounge</span> <span class="vote-count">9</span></div>
                     </div>
                 </div>
 
                 <div class="card span-2 bg-blue">
                     <span class="emoji">🍲</span>
-                    <h3>Cozy Williston Lunch</h3>
+                    <h3>Cozy Lunch Williston</h3>
                     <div class="leaderboard">
                         <div class="leaderboard-item first"><span>1. Garden of Eatin'</span> <span class="vote-count">108 likes</span></div>
                         <div class="leaderboard-item"><span>2. Chef's Corner</span> <span class="vote-count">34</span></div>
                         <div class="leaderboard-item"><span>3. Café at Island Ice Cream</span> <span class="vote-count">29</span></div>
+                        <div class="leaderboard-item"><span>4. Simply Divine Café</span> <span class="vote-count">27</span></div>
+                        <div class="leaderboard-item"><span>5. Aromas of India</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>6. The Scale</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>7. Williston Coffee Shop</span> <span class="vote-count">12</span></div>
+                        <div class="leaderboard-item"><span>8. Casa Grande</span> <span class="vote-count">11</span></div>
+                        <div class="leaderboard-item"><span>9. Toscano Bistro</span> <span class="vote-count">9</span></div>
+                        <div class="leaderboard-item"><span>10. The Rotisserie Restaurant</span> <span class="vote-count">7</span></div>
                     </div>
                 </div>
 
-                <div class="card bg-pink">
+                <div class="card span-2 bg-pink">
                     <span class="emoji">🥡</span>
                     <h3>Chinese Food</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Hop Sing</span> <span class="vote-count">52</span></div>
+                        <div class="leaderboard-item first"><span>1. Hop Sing</span> <span class="vote-count">52 likes</span></div>
                         <div class="leaderboard-item"><span>2. China Express 2</span> <span class="vote-count">47</span></div>
                         <div class="leaderboard-item"><span>3. Cafe Dim Sum</span> <span class="vote-count">47</span></div>
+                        <div class="leaderboard-item"><span>4. Morning Light Bakery</span> <span class="vote-count">45</span></div>
+                        <div class="leaderboard-item"><span>5. Zen Gardens</span> <span class="vote-count">30</span></div>
+                        <div class="leaderboard-item"><span>6. China Express 1</span> <span class="vote-count">27</span></div>
+                        <div class="leaderboard-item"><span>7. A Single Pebble</span> <span class="vote-count">21</span></div>
+                        <div class="leaderboard-item"><span>8. Hung Tao</span> <span class="vote-count">19</span></div>
+                        <div class="leaderboard-item"><span>9. Hong Kong Kitchen</span> <span class="vote-count">16</span></div>
+                        <div class="leaderboard-item"><span>10. China Garden</span> <span class="vote-count">16</span></div>
+                        <div class="leaderboard-item"><span>11. Oriental Wok</span> <span class="vote-count">7</span></div>
                     </div>
                 </div>
 
-                <div class="card bg-green">
+                <div class="card span-2 bg-green">
                     <span class="emoji">🍝</span>
                     <h3>Italian Food</h3>
                     <div class="leaderboard">
-                        <div class="leaderboard-item first"><span>1. Papa Franks</span> <span class="vote-count">28</span></div>
+                        <div class="leaderboard-item first"><span>1. Papa Franks</span> <span class="vote-count">28 likes</span></div>
                         <div class="leaderboard-item"><span>2. JR's / Junior's</span> <span class="vote-count">19</span></div>
                         <div class="leaderboard-item"><span>3. Pulcinellas</span> <span class="vote-count">13</span></div>
+                        <div class="leaderboard-item"><span>4. Toscano Bistro</span> <span class="vote-count">8</span></div>
+                        <div class="leaderboard-item"><span>5. Mimi’s Italian Eats</span> <span class="vote-count">8</span></div>
+                        <div class="leaderboard-item"><span>6. Trattoria Delia</span> <span class="vote-count">7</span></div>
                     </div>
                 </div>
             </div>
